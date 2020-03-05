@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Paddle : MonoBehaviour
 {
-    bool isPlayer = false;
+    public bool isPlayer = false;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +17,8 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isPlayer) {
+            this.transform.position = Input.mousePosition;
+        }
     }
 }
