@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Puck
+    uniqueID: 3123535765
+    locked: 0
