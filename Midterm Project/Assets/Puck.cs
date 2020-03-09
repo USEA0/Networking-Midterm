@@ -34,30 +34,74 @@ public class Puck : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Triggered");
 
         //collision handling
-        if (collision.tag == "HorizWall")
+        if (collision.gameObject.tag == "HorizWall")
         {
             V.y = -V.y;
         }
-        else if (collision.tag == "VertWall")
+        else if (collision.gameObject.tag == "VertWall")
         {
             V.x = -V.x;
         }
-        else if (collision.tag == "Player")
+        else if (collision.gameObject.tag == "Player")
         {
-            Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.GetComponent<Paddle>().velo;
+            Debug.Log("Triggered");
+
+            //calculate impulse
+            Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.gameObject.GetComponent<Paddle>().velo;
+
+            //queue impulse locally
             I.Enqueue(impulseTemp);
+
+            //send to the network
             NetworkManager.SendImpulse(impulseTemp);
+
+
+            //manual collision
+            float dx = this.transform.position.x - collision.transform.position.x;
+            float dy = this.transform.position.y - collision.transform.position.y;
+
+            var distance = Mathf.Sqrt(dx * dx + dy * dy);
+
+            if (distance < this.transform.localScale.y + collision.transform.localScale.y)
+            {
+                Vector3 dir = -((collision.transform.position - this.transform.position).normalized);
+                float nDist = (this.transform.localScale.y + collision.transform.localScale.y - distance);
+
+                this.transform.position = this.transform.position + (dir * (nDist + 0.01f));
+            }
         }
-        else if (collision.tag == "GoalR") {
+        else if (collision.gameObject.tag == "GoalR")
+        {
             Debug.Log("Winner: Blue");
         }
-        else if (collision.tag == "GoalR")
+        else if (collision.gameObject.tag == "GoalR")
         {
             Debug.Log("Winner: Red");
         }
 
+    }
+
+
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            //manual collision
+            float dx = this.transform.position.x - collision.transform.position.x;
+            float dy = this.transform.position.y - collision.transform.position.y;
+
+            var distance = Mathf.Sqrt(dx * dx + dy * dy);
+
+            if (distance < this.transform.localScale.y + collision.transform.localScale.y)
+            {
+                Vector3 dir = -((collision.transform.position - this.transform.position).normalized);
+                float nDist = (this.transform.localScale.y + collision.transform.localScale.y - distance);
+
+                this.transform.position = this.transform.position + (dir * (nDist+0.01f));
+            }
+
+        }
     }
 }

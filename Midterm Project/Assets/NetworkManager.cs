@@ -199,14 +199,16 @@ public class NetworkManager : MonoBehaviour
     //process all things here
     void TickUpdate()
     {
-
-        StringBuilder position = new StringBuilder();
-        position.Append(playerPaddle.transform.position.x);
-        position.Append(",");
-        position.Append(playerPaddle.transform.position.y);
-
+        if (playerPaddle != null)
+        {
+            StringBuilder position = new StringBuilder();
+            position.Append(playerPaddle.transform.position.x);
+            position.Append(",");
+            position.Append(playerPaddle.transform.position.y);
+        
 
         SendData((int)PacketType.PLAYER_POSITION, position.ToString(), false, Client);
+        }
     }
 
 
