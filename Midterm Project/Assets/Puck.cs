@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/*
+Names:
+John Wang - 100657681
+Boris Au - 100660279
+*/
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,12 +52,14 @@ public class Puck : MonoBehaviour
 
     private void Update()
     {
+        //update score
         if (ScoreFlag) {
             Score.text = scoreR.ToString() + "-" + scoreB.ToString();
             ScoreFlag = false;
         }
     }
 
+    //resets position
     public void ResetPosition() {
         this.transform.position = new Vector2(0, 0);
         I.Clear();
@@ -95,8 +101,6 @@ public class Puck : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<Paddle>().isPlayer)
             {
-                Debug.Log("Triggered");
-
                 //calculate impulse
                 Vector2 impulseTemp = -collision.gameObject.GetComponent<Paddle>().velo;
 

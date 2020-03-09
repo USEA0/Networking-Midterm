@@ -1,5 +1,8 @@
-﻿using System.Collections;
-using UnityEngine.UI;
+﻿/*
+Names:
+John Wang - 100657681
+Boris Au - 100660279
+*/
 using UnityEngine;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -78,7 +81,7 @@ public class NetworkManager : MonoBehaviour
     //tick timestep
     int fixedTimeStep = 0;
     //tick delay
-    public int tickDelay = 50;
+    public int tickDelay = 1;
 
     // Start is called before the first frame update
     void Awake()
@@ -110,33 +113,18 @@ public class NetworkManager : MonoBehaviour
     {
         //set update lag delays
         if (Input.GetKey(KeyCode.Alpha1)) {
-            tickDelay = 1;
+            tickDelay--;
+
+            if (tickDelay < 1) {
+                tickDelay = 1;
+            }
+            Debug.Log("Lag is " + tickDelay.ToString() + " Frames.");
         }
         if (Input.GetKey(KeyCode.Alpha2))
         {
-            tickDelay = 2;
+            tickDelay++;
+            Debug.Log("Lag is " + tickDelay.ToString() + " Frames.");
         }
-        if (Input.GetKey(KeyCode.Alpha3))
-        {
-            tickDelay = 3;
-        }
-        if (Input.GetKey(KeyCode.Alpha4))
-        {
-            tickDelay = 5;
-        }
-        if (Input.GetKey(KeyCode.Alpha5))
-        {
-            tickDelay = 10;
-        }
-        if (Input.GetKey(KeyCode.Alpha6))
-        {
-            tickDelay = 25;
-        }
-        if (Input.GetKey(KeyCode.Alpha7))
-        {
-            tickDelay = 50;
-        }
-
     }
 
     //update loop
@@ -230,6 +218,7 @@ public class NetworkManager : MonoBehaviour
         //Debug.Log(data);
         data.TrimEnd();
 
+
         //parse the data
         string[] parsedData = data.Split(',');
 
@@ -238,6 +227,8 @@ public class NetworkManager : MonoBehaviour
             case PacketType.MESSAGE:
                 if (parsedData.Length == 2)
                 {
+                    Debug.Log("Message:" + data);
+
                     StringBuilder newString = new StringBuilder();
 
                     newString.Append(parsedData[1]);
@@ -255,6 +246,8 @@ public class NetworkManager : MonoBehaviour
             case PacketType.PLAYER_POSITION:
                 if (parsedData.Length == 2)
                 {
+                    Debug.Log("Player Position:" + data);
+
                     //update paddle position
                     positionIncomming = new Vector2(float.Parse(parsedData[0]), float.Parse(parsedData[1]));
                     positionUpdated = true;
@@ -266,9 +259,10 @@ public class NetworkManager : MonoBehaviour
 
             case PacketType.PUCK_IMPULSE:
 
-                Debug.Log("Impulse Recieved");
                 if (parsedData.Length == 2)
                 {
+                    Debug.Log("Impulse Vector:" + data);
+
                     //update puck position
                     puckImpulse = new Vector2(float.Parse(parsedData[0]), float.Parse(parsedData[1]));
                     impulseUpdated = true;

@@ -1,5 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/*
+Names:
+John Wang - 100657681
+Boris Au - 100660279
+*/
+
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
@@ -17,6 +21,7 @@ public class Paddle : MonoBehaviour
 
             Vector3 pos = new Vector3(0,0,0);
 
+            //boundaries on y
             if (Camera.main.ScreenToWorldPoint(Input.mousePosition).y < -3.5f)
             {
                 pos.y = -3.5f;
@@ -28,7 +33,7 @@ public class Paddle : MonoBehaviour
             else {
                 pos.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
             }
-
+            //boundaries on x
             if (playerNum == 1)
             {
                 if (Camera.main.ScreenToWorldPoint(Input.mousePosition).x > -0.5)
@@ -62,7 +67,8 @@ public class Paddle : MonoBehaviour
             
             Vector2 pos2D = new Vector2(pos.x, pos.y);
 
-            velo = (prevPos - pos2D);///Time.deltaTime;
+            //update velocity and position
+            velo = (prevPos - pos2D);
             prevPos = pos2D;
             
         }
