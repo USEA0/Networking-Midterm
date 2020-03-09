@@ -2483,7 +2483,7 @@ MonoBehaviour:
   notPlayerPaddle: {fileID: 0}
   puck: {fileID: 1215674540}
   canvas: {fileID: 672759817}
-  tickDelay: 50
+  tickDelay: 1
 --- !u!1 &1718894204
 GameObject:
   m_ObjectHideFlags: 0
