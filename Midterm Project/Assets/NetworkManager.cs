@@ -163,7 +163,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         //update position
-        if (positionUpdated) {
+        if (positionUpdated && notPlayerPaddle != null) {
             notPlayerPaddle.transform.position = positionIncomming;
         }
         //update position
@@ -226,7 +226,7 @@ public class NetworkManager : MonoBehaviour
     //recieve all input data
     static void PacketRecieved(int type, int sender, string data)
     {
-        Debug.Log(data);
+        //Debug.Log(data);
         data.TrimEnd();
 
         //parse the data
@@ -264,6 +264,8 @@ public class NetworkManager : MonoBehaviour
                 break;
 
             case PacketType.PUCK_IMPULSE:
+
+                Debug.Log("Impulse Recieved");
                 if (parsedData.Length == 2)
                 {
                     //update puck position

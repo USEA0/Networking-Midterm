@@ -48,30 +48,19 @@ public class Puck : MonoBehaviour
         {
             Debug.Log("Triggered");
 
-            //calculate impulse
-            Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.gameObject.GetComponent<Paddle>().velo;
-
-            //queue impulse locally
-            I.Enqueue(impulseTemp);
-
-            //send to the network
-            NetworkManager.SendImpulse(impulseTemp);
-
-            /*
-            //manual collision
-            float dx = this.transform.position.x - collision.transform.position.x;
-            float dy = this.transform.position.y - collision.transform.position.y;
-
-            var distance = Mathf.Sqrt(dx * dx + dy * dy);
-
-            if (distance < this.transform.localScale.y + collision.transform.localScale.y)
+            if (!collision.gameObject.GetComponent<Paddle>().isPlayer)
             {
-                Vector3 dir = -((collision.transform.position - this.transform.position).normalized);
-                float nDist = (this.transform.localScale.y + collision.transform.localScale.y - distance);
 
-                this.transform.position = this.transform.position + (dir * (nDist + 0.01f));
+                //calculate impulse
+                Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.gameObject.GetComponent<Paddle>().velo;
+
+                //queue impulse locally
+                I.Enqueue(impulseTemp);
+
+                //send to the network
+                NetworkManager.SendImpulse(impulseTemp);
             }
-            */
+
         }
         else if (collision.gameObject.tag == "GoalR")
         {
