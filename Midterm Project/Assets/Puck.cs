@@ -5,7 +5,7 @@ using UnityEngine;
 public class Puck : MonoBehaviour
 {
     //impulse
-    public Queue<Vector2> I;
+    public Queue<Vector2> I = new Queue<Vector2>();
     //acceleration
     public Vector2 A;
     //velocity
