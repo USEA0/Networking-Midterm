@@ -47,7 +47,9 @@ public class Puck : MonoBehaviour
         }
         else if (collision.tag == "Player")
         {
-            I.Enqueue((collision.transform.position - this.transform.position).normalized * collision.GetComponent<Paddle>().velo);
+            Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.GetComponent<Paddle>().velo;
+            I.Enqueue(impulseTemp);
+            NetworkManager.SendImpulse(impulseTemp);
         }
         else if (collision.tag == "GoalR") {
             Debug.Log("Winner: Blue");

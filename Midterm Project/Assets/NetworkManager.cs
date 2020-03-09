@@ -106,6 +106,39 @@ public class NetworkManager : MonoBehaviour
         StartUpdating(Client);
     }
 
+    private void Update()
+    {
+        //set update lag delays
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            tickDelay = 1;
+        }
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            tickDelay = 2;
+        }
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            tickDelay = 3;
+        }
+        if (Input.GetKey(KeyCode.Alpha4))
+        {
+            tickDelay = 5;
+        }
+        if (Input.GetKey(KeyCode.Alpha5))
+        {
+            tickDelay = 10;
+        }
+        if (Input.GetKey(KeyCode.Alpha6))
+        {
+            tickDelay = 25;
+        }
+        if (Input.GetKey(KeyCode.Alpha7))
+        {
+            tickDelay = 50;
+        }
+
+    }
+
     //update loop
     private void FixedUpdate()
     {
@@ -177,11 +210,11 @@ public class NetworkManager : MonoBehaviour
     }
 
 
-    void SendImpulse(Vector2 I) {
+    public static void SendImpulse(Vector2 I) {
         StringBuilder position = new StringBuilder();
-        position.Append(playerPaddle.transform.position.x);
+        position.Append(I.x);
         position.Append(",");
-        position.Append(playerPaddle.transform.position.y);
+        position.Append(I.y);
 
 
         SendData((int)PacketType.PUCK_IMPULSE, position.ToString(), false, Client);
