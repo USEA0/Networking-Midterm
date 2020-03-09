@@ -536,8 +536,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 169452966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.932, y: -2.65, z: -4.304836}
-  m_LocalScale: {x: 1.2442701, y: 1.329304, z: 1}
+  m_LocalPosition: {x: -9.979, y: -2.65, z: -4.304836}
+  m_LocalScale: {x: 1.280354, y: 1.329304, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -1101,8 +1101,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136928055}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.987, y: 2.714, z: -4.304836}
-  m_LocalScale: {x: 1.2595774, y: 1.329304, z: 1}
+  m_LocalPosition: {x: -10.034, y: 2.714, z: -4.304836}
+  m_LocalScale: {x: 1.2961051, y: 1.329304, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -2299,7 +2299,7 @@ MonoBehaviour:
   - {fileID: 1620188516}
   playerPaddle: {fileID: 0}
   notPlayerPaddle: {fileID: 0}
-  puck: {fileID: 0}
+  puck: {fileID: 1215674540}
   canvas: {fileID: 672759817}
   tickDelay: 50
 --- !u!1 &1718894204

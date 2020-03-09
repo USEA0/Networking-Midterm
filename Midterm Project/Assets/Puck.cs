@@ -57,7 +57,7 @@ public class Puck : MonoBehaviour
             //send to the network
             NetworkManager.SendImpulse(impulseTemp);
 
-
+            /*
             //manual collision
             float dx = this.transform.position.x - collision.transform.position.x;
             float dy = this.transform.position.y - collision.transform.position.y;
@@ -71,6 +71,7 @@ public class Puck : MonoBehaviour
 
                 this.transform.position = this.transform.position + (dir * (nDist + 0.01f));
             }
+            */
         }
         else if (collision.gameObject.tag == "GoalR")
         {
@@ -83,7 +84,7 @@ public class Puck : MonoBehaviour
 
     }
 
-
+    /*
     public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -104,4 +105,5 @@ public class Puck : MonoBehaviour
 
         }
     }
+    */
 }
