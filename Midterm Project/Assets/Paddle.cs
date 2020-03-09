@@ -62,7 +62,7 @@ public class Paddle : MonoBehaviour
             
             Vector2 pos2D = new Vector2(pos.x, pos.y);
 
-            velo = (prevPos - pos2D)/Time.deltaTime;
+            velo = (prevPos - pos2D);///Time.deltaTime;
             prevPos = pos2D;
             
         }

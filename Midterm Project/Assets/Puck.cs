@@ -51,7 +51,7 @@ public class Puck : MonoBehaviour
                 Debug.Log("Triggered");
 
                 //calculate impulse
-                Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.gameObject.GetComponent<Paddle>().velo;
+                Vector2 impulseTemp = -collision.gameObject.GetComponent<Paddle>().velo; //(collision.transform.position - this.transform.position).normalized * ;
 
                 //queue impulse locally
                 I.Enqueue(impulseTemp);
@@ -65,7 +65,7 @@ public class Puck : MonoBehaviour
         {
             Debug.Log("Winner: Blue");
         }
-        else if (collision.gameObject.tag == "GoalR")
+        else if (collision.gameObject.tag == "GoalB")
         {
             Debug.Log("Winner: Red");
         }

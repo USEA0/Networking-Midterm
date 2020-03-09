@@ -170,6 +170,7 @@ public class NetworkManager : MonoBehaviour
         if (impulseUpdated)
         {
             puck.I.Enqueue(puckImpulse);
+            impulseUpdated = false;
         }
 
 
