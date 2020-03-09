@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Puck : MonoBehaviour
 {
     //impulse
@@ -10,6 +10,11 @@ public class Puck : MonoBehaviour
     public Vector2 A;
     //velocity
     public Vector2 V;
+
+    public Text Score;
+    public int scoreR = 0;
+    public int scoreB = 0;
+    public bool ScoreFlag = false;
 
     public float maxSpeed;
     public float minSpeed;
@@ -39,6 +44,21 @@ public class Puck : MonoBehaviour
 
         //update position
         this.transform.position = new Vector2(this.transform.position.x + V.x, this.transform.position.y + V.y);
+    }
+
+    private void Update()
+    {
+        if (ScoreFlag) {
+            Score.text = scoreR.ToString() + "-" + scoreB.ToString();
+            ScoreFlag = false;
+        }
+    }
+
+    public void ResetPosition() {
+        this.transform.position = new Vector2(0, 0);
+        I.Clear();
+        A = new Vector2(0, 0);
+        V = new Vector2(0, 0);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -102,23 +122,22 @@ public class Puck : MonoBehaviour
         }
         else if (collision.gameObject.tag == "GoalR")
         {
+            ResetPosition();
+            //add score
+            scoreB++;
+            ScoreFlag = true;
+
             Debug.Log("Winner: Blue");
         }
         else if (collision.gameObject.tag == "GoalB")
         {
+            ResetPosition();
+            //add score
+            scoreR++;
+            ScoreFlag = true;
+
             Debug.Log("Winner: Red");
         }
 
     }
-
-    /*
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-
-
-        }
-    }
-    */
 }
