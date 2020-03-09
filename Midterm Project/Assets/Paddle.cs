@@ -18,7 +18,7 @@ public class Paddle : MonoBehaviour
     void Update()
     {
         if (isPlayer) {
-            this.transform.position = Input.mousePosition;
+            this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
     }
 }

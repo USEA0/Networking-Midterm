@@ -2257,6 +2257,7 @@ MonoBehaviour:
   - {fileID: 1620188516}
   playerPaddle: {fileID: 0}
   notPlayerPaddle: {fileID: 0}
+  canvas: {fileID: 672759817}
   tickDelay: 50
 --- !u!1 &1718894204
 GameObject:

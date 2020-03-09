@@ -71,6 +71,8 @@ public class NetworkManager : MonoBehaviour
     public Paddle playerPaddle;
     public Paddle notPlayerPaddle;
 
+    public GameObject canvas;
+
     //tick timestep
     int fixedTimeStep = 0;
     //tick delay
@@ -145,6 +147,7 @@ public class NetworkManager : MonoBehaviour
                 playerPaddle = paddles[1];
                 notPlayerPaddle = paddles[0];
             }
+            canvas.SetActive(false);
 
             connectFlag = false;
         }
@@ -206,4 +209,13 @@ public class NetworkManager : MonoBehaviour
                 break;
         }
     }
+
+    //call c++ cleanup
+    private void OnDestroy()
+    {
+        //clean up client
+        DeleteClient(Client);
+
+    }
+
 }
