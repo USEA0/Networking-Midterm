@@ -46,10 +46,9 @@ public class Puck : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Triggered");
-
-            if (!collision.gameObject.GetComponent<Paddle>().isPlayer)
+            if (collision.gameObject.GetComponent<Paddle>().isPlayer)
             {
+                Debug.Log("Triggered");
 
                 //calculate impulse
                 Vector2 impulseTemp = (collision.transform.position - this.transform.position).normalized * collision.gameObject.GetComponent<Paddle>().velo;
