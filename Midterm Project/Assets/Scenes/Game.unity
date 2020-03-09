@@ -271,9 +271,9 @@ GameObject:
   - component: {fileID: 130109864}
   - component: {fileID: 130109863}
   - component: {fileID: 130109862}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Walls
-  m_TagString: Untagged
+  m_TagString: HorizWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -288,7 +288,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -445,9 +445,9 @@ GameObject:
   - component: {fileID: 169452969}
   - component: {fileID: 169452968}
   - component: {fileID: 169452967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walls (3)
-  m_TagString: Untagged
+  m_TagString: VertWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -462,7 +462,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -626,9 +626,9 @@ GameObject:
   - component: {fileID: 462023151}
   - component: {fileID: 462023150}
   - component: {fileID: 462023149}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Goal Red
-  m_TagString: Untagged
+  m_TagString: GoalR
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1010,9 +1010,9 @@ GameObject:
   - component: {fileID: 1136928058}
   - component: {fileID: 1136928057}
   - component: {fileID: 1136928056}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walls (2)
-  m_TagString: Untagged
+  m_TagString: VertWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1027,7 +1027,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1118,6 +1118,8 @@ GameObject:
   - component: {fileID: 1215674538}
   - component: {fileID: 1215674539}
   - component: {fileID: 1215674541}
+  - component: {fileID: 1215674540}
+  - component: {fileID: 1215674542}
   m_Layer: 0
   m_Name: Puck
   m_TagString: Untagged
@@ -1133,7 +1135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215674537}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalPosition: {x: 0.01, y: 0.02, z: -0.5}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1189,6 +1191,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1215674540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215674537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0231805719458846bcdc97c2d706cb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  I: {x: 0, y: 0}
+  A: {x: 0, y: 0}
+  V: {x: 0, y: 0}
+  drag: 0.01
+  physicsEnabled: 1
 --- !u!58 &1215674541
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1205,6 +1224,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.2799999
+--- !u!50 &1215674542
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215674537}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1 &1278046387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,9 +1256,9 @@ GameObject:
   - component: {fileID: 1278046390}
   - component: {fileID: 1278046389}
   - component: {fileID: 1278046388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Walls (1)
-  m_TagString: Untagged
+  m_TagString: HorizWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1233,7 +1273,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1324,9 +1364,9 @@ GameObject:
   - component: {fileID: 1338678096}
   - component: {fileID: 1338678095}
   - component: {fileID: 1338678094}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walls (5)
-  m_TagString: Untagged
+  m_TagString: VertWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1341,7 +1381,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1433,9 +1473,9 @@ GameObject:
   - component: {fileID: 1392456832}
   - component: {fileID: 1392456833}
   - component: {fileID: 1392456834}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1448,7 +1488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392456830}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 0, z: 0}
+  m_LocalPosition: {x: -5.38, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1514,7 +1554,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1533,6 +1573,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
+  playerNum: 0
+  velo: {x: 0, y: 0}
 --- !u!1 &1413847075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1841,9 +1883,9 @@ GameObject:
   - component: {fileID: 1547283302}
   - component: {fileID: 1547283301}
   - component: {fileID: 1547283300}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Walls (4)
-  m_TagString: Untagged
+  m_TagString: VertWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1858,7 +1900,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2108,9 +2150,9 @@ GameObject:
   - component: {fileID: 1620188514}
   - component: {fileID: 1620188515}
   - component: {fileID: 1620188516}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2189,7 +2231,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -2208,6 +2250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
+  playerNum: 0
+  velo: {x: 0, y: 0}
 --- !u!1 &1641452593
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,9 +2314,9 @@ GameObject:
   - component: {fileID: 1718894207}
   - component: {fileID: 1718894206}
   - component: {fileID: 1718894205}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Goal Blue
-  m_TagString: Untagged
+  m_TagString: GoalB
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
