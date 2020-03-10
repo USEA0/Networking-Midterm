@@ -208,7 +208,7 @@ public class NetworkManager : MonoBehaviour
         position.Append(I.y);
 
 
-        SendData((int)PacketType.PUCK_IMPULSE, position.ToString(), false, Client);
+        SendData((int)PacketType.PUCK_IMPULSE, position.ToString(), true, Client);
 
     }
 
