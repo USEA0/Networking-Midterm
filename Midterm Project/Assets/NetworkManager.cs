@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -61,8 +62,15 @@ public class NetworkManager : MonoBehaviour
     //queue for storing messages
     public static Queue<string> MessageQueue = new Queue<string>();
 
-    public Player[] allPlayers;
+    //quue for storing player data
+    public static Queue<string[]> DataQueue = new Queue<string[]>();
+
+
+    //max 99 players
+    public Player[] allPlayers = new Player[99];
     public Player controllingPlayer;
+    public GameObject playerObjInstance;
+    public GameObject playerObj;
 
     public GameObject canvas;
 
@@ -114,6 +122,24 @@ public class NetworkManager : MonoBehaviour
             tickDelay++;
             Debug.Log("Lag is " + tickDelay.ToString() + " Frames.");
         }
+
+        if (connectFlag) {
+            //init at random position
+            playerObj = Instantiate(playerObjInstance, new Vector2(UnityEngine.Random.Range(-Player.boundaries.x, Player.boundaries.x), UnityEngine.Random.Range(-Player.boundaries.y, Player.boundaries.y)), Quaternion.identity);
+            controllingPlayer = playerObj.GetComponent<Player>();
+            controllingPlayer.isControllable = true;
+
+            //add to list
+            allPlayers[playerNumber] = controllingPlayer;
+
+            Debug.Log("Created User");
+
+            //send to server
+            SendUpdate();
+
+            canvas.SetActive(false);
+            connectFlag = false;
+        }
     }
 
     //update loop
@@ -139,54 +165,58 @@ public class NetworkManager : MonoBehaviour
             }
         }
 
-        ////update position
-        //if (positionUpdated && notPlayerPaddle != null) {
-        //    notPlayerPaddle.transform.position = positionIncomming;
-        //}
-        ////update position
-        //if (impulseUpdated)
-        //{
-        //    puck.I.Enqueue(puckImpulse);
-        //    impulseUpdated = false;
-        //}
+        while (DataQueue.Count > 0) {
+            string[] data = DataQueue.Dequeue();
 
+            if (allPlayers[int.Parse(data[0])] != null)
+            {
+                allPlayers[int.Parse(data[0])].px = float.Parse(data[1]);
+                allPlayers[int.Parse(data[0])].py = float.Parse(data[2]);
 
-        if (connectFlag)
-        {
-            ////start game here
-            //if (playerNumber == 0)
-            //{
-            //    paddles[0].isPlayer = true;
-            //    paddles[0].playerNum = 1;
-            //    playerPaddle = paddles[0];
-            //    notPlayerPaddle = paddles[1];
-            //}
-            //else {
-            //    paddles[1].isPlayer = true;
-            //    paddles[0].playerNum = 2;
-            //    playerPaddle = paddles[1];
-            //    notPlayerPaddle = paddles[0];
-            //}
-            canvas.SetActive(false);
+                allPlayers[int.Parse(data[0])].vx = float.Parse(data[3]);
+                allPlayers[int.Parse(data[0])].vy = float.Parse(data[4]);
+            }
+            else {
+                playerObj = Instantiate(playerObjInstance, new Vector2(float.Parse(data[1]), float.Parse(data[2])), Quaternion.identity);
 
-            connectFlag = false;
+                //add to list
+                allPlayers[int.Parse(data[0])] = playerObj.GetComponent<Player>();
+                allPlayers[int.Parse(data[0])].vx = float.Parse(data[3]);
+                allPlayers[int.Parse(data[0])].vy = float.Parse(data[4]);
+
+            }
+
+            allPlayers[int.Parse(data[0])].updated = true;
         }
+    }
 
+    void SendUpdate() {
+
+        StringBuilder data = new StringBuilder();
+        data.Append(controllingPlayer);
+        data.Append(",");
+        data.Append(controllingPlayer.transform.position.x);
+        data.Append(",");
+        data.Append(controllingPlayer.transform.position.y);
+        data.Append(",");
+        data.Append(controllingPlayer.vx);
+        data.Append(",");
+        data.Append(controllingPlayer.vy);
+
+        SendData((int)PacketType.PLAYER, data.ToString(), false, Client);
     }
 
     //process all things here
     void TickUpdate()
     {
-        //if (playerPaddle != null)
-        //{
-        //    StringBuilder position = new StringBuilder();
-        //    position.Append(playerPaddle.transform.position.x);
-        //    position.Append(",");
-        //    position.Append(playerPaddle.transform.position.y);
-        
 
-        //SendData((int)PacketType.PLAYER_POSITION, position.ToString(), false, Client);
-        //}
+        //flag for checking if moved
+        if (controllingPlayer.moved)
+        {
+            //sends update
+            SendUpdate();
+            controllingPlayer.moved = false;
+        }
     }
 
     //recieve all input data
@@ -221,13 +251,11 @@ public class NetworkManager : MonoBehaviour
                 }
                 break;
             case PacketType.PLAYER:
-                if (parsedData.Length == 4)
+                if (parsedData.Length == 5)
                 {
                     Debug.Log("Player Position:" + data);
 
-                    //update paddle position
-                    //positionIncomming = new Vector2(float.Parse(parsedData[0]), float.Parse(parsedData[1]));
-                    //positionUpdated = true;
+                    DataQueue.Enqueue(parsedData);
                 }
                 else {
                     Debug.LogWarning("Packet: PLAYER_POSITION Length is invalid");
