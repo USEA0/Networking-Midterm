@@ -17,12 +17,8 @@ public class NetworkManager : MonoBehaviour
         INIT_CONNECTION,
         //single string
         MESSAGE,
-        //player's position udp
-        PLAYER_POSITION,
-        //puck impulse for physics player tcp
-        PUCK_IMPULSE,
-        //info about game win and loss tcp
-        GAMEWIN,
+        //player's data udp
+        PLAYER,
     }
 
     #region Netcode
@@ -65,15 +61,8 @@ public class NetworkManager : MonoBehaviour
     //queue for storing messages
     public static Queue<string> MessageQueue = new Queue<string>();
 
-    public static Vector2 positionIncomming = new Vector2();
-    public static bool positionUpdated = false;
-    public static Vector2 puckImpulse = new Vector2();
-    public static bool impulseUpdated = false;
-
-    public Paddle[] paddles;
-    public Paddle playerPaddle;
-    public Paddle notPlayerPaddle;
-    public Puck puck;
+    public Player[] allPlayers;
+    public Player controllingPlayer;
 
     public GameObject canvas;
 
@@ -150,34 +139,34 @@ public class NetworkManager : MonoBehaviour
             }
         }
 
-        //update position
-        if (positionUpdated && notPlayerPaddle != null) {
-            notPlayerPaddle.transform.position = positionIncomming;
-        }
-        //update position
-        if (impulseUpdated)
-        {
-            puck.I.Enqueue(puckImpulse);
-            impulseUpdated = false;
-        }
+        ////update position
+        //if (positionUpdated && notPlayerPaddle != null) {
+        //    notPlayerPaddle.transform.position = positionIncomming;
+        //}
+        ////update position
+        //if (impulseUpdated)
+        //{
+        //    puck.I.Enqueue(puckImpulse);
+        //    impulseUpdated = false;
+        //}
 
 
         if (connectFlag)
         {
-            //start game here
-            if (playerNumber == 0)
-            {
-                paddles[0].isPlayer = true;
-                paddles[0].playerNum = 1;
-                playerPaddle = paddles[0];
-                notPlayerPaddle = paddles[1];
-            }
-            else {
-                paddles[1].isPlayer = true;
-                paddles[0].playerNum = 2;
-                playerPaddle = paddles[1];
-                notPlayerPaddle = paddles[0];
-            }
+            ////start game here
+            //if (playerNumber == 0)
+            //{
+            //    paddles[0].isPlayer = true;
+            //    paddles[0].playerNum = 1;
+            //    playerPaddle = paddles[0];
+            //    notPlayerPaddle = paddles[1];
+            //}
+            //else {
+            //    paddles[1].isPlayer = true;
+            //    paddles[0].playerNum = 2;
+            //    playerPaddle = paddles[1];
+            //    notPlayerPaddle = paddles[0];
+            //}
             canvas.SetActive(false);
 
             connectFlag = false;
@@ -188,28 +177,16 @@ public class NetworkManager : MonoBehaviour
     //process all things here
     void TickUpdate()
     {
-        if (playerPaddle != null)
-        {
-            StringBuilder position = new StringBuilder();
-            position.Append(playerPaddle.transform.position.x);
-            position.Append(",");
-            position.Append(playerPaddle.transform.position.y);
+        //if (playerPaddle != null)
+        //{
+        //    StringBuilder position = new StringBuilder();
+        //    position.Append(playerPaddle.transform.position.x);
+        //    position.Append(",");
+        //    position.Append(playerPaddle.transform.position.y);
         
 
-        SendData((int)PacketType.PLAYER_POSITION, position.ToString(), false, Client);
-        }
-    }
-
-
-    public static void SendImpulse(Vector2 I) {
-        StringBuilder position = new StringBuilder();
-        position.Append(I.x);
-        position.Append(",");
-        position.Append(I.y);
-
-
-        SendData((int)PacketType.PUCK_IMPULSE, position.ToString(), true, Client);
-
+        //SendData((int)PacketType.PLAYER_POSITION, position.ToString(), false, Client);
+        //}
     }
 
     //recieve all input data
@@ -243,36 +220,20 @@ public class NetworkManager : MonoBehaviour
                     Debug.LogWarning("Packet: MESSAGE Length is invalid");
                 }
                 break;
-            case PacketType.PLAYER_POSITION:
-                if (parsedData.Length == 2)
+            case PacketType.PLAYER:
+                if (parsedData.Length == 4)
                 {
                     Debug.Log("Player Position:" + data);
 
                     //update paddle position
-                    positionIncomming = new Vector2(float.Parse(parsedData[0]), float.Parse(parsedData[1]));
-                    positionUpdated = true;
+                    //positionIncomming = new Vector2(float.Parse(parsedData[0]), float.Parse(parsedData[1]));
+                    //positionUpdated = true;
                 }
                 else {
                     Debug.LogWarning("Packet: PLAYER_POSITION Length is invalid");
                 }
                 break;
 
-            case PacketType.PUCK_IMPULSE:
-
-                if (parsedData.Length == 2)
-                {
-                    Debug.Log("Impulse Vector:" + data);
-
-                    //update puck position
-                    puckImpulse = new Vector2(float.Parse(parsedData[0]), float.Parse(parsedData[1]));
-                    impulseUpdated = true;
-                }
-                else
-                {
-                    Debug.LogWarning("Packet: PUCK_IMPULSE Length is invalid");
-                }
-
-                break;
         }
     }
 
