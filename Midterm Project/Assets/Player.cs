@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     public float py = 0;
     public bool updated = false;
     public bool moved = false;
+    [Range(0.0f, 1.0f)]
+    public float deadReckoningFalloff = 0.95f;
+
     private void FixedUpdate()
     {
         if (isControllable)
@@ -68,9 +71,13 @@ public class Player : MonoBehaviour
                 transform.position = new Vector2(px, py);
                 updated = false;
             }
-
-            //time is automatically updated through Fixedupdate [P = Pk + V*T]
-            transform.position = new Vector2(transform.position.x + vx, transform.position.y + vy);
+            else
+            {
+                vx = deadReckoningFalloff * vx;
+                vy = deadReckoningFalloff * vy;
+                //time is automatically updated through Fixedupdate [P = Pk + V*T]
+                transform.position = new Vector2(transform.position.x + vx, transform.position.y + vy);
+            }
         }
     }
 
