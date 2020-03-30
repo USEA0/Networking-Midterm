@@ -167,33 +167,33 @@ public class NetworkManager : MonoBehaviour
 
         while (DataQueue.Count > 0) {
             string[] data = DataQueue.Dequeue();
-
-            if (allPlayers[int.Parse(data[0])] != null)
-            {
-                allPlayers[int.Parse(data[0])].px = float.Parse(data[1]);
-                allPlayers[int.Parse(data[0])].py = float.Parse(data[2]);
-
-                allPlayers[int.Parse(data[0])].vx = float.Parse(data[3]);
-                allPlayers[int.Parse(data[0])].vy = float.Parse(data[4]);
+            int playerNum = int.Parse(data[0]);
+            if (allPlayers[playerNum] != null)
+            {              
+                allPlayers[playerNum].px = float.Parse(data[1]);
+                allPlayers[playerNum].py = float.Parse(data[2]);
+                           
+                allPlayers[playerNum].vx = float.Parse(data[3]);
+                allPlayers[playerNum].vy = float.Parse(data[4]);
             }
             else {
                 playerObj = Instantiate(playerObjInstance, new Vector2(float.Parse(data[1]), float.Parse(data[2])), Quaternion.identity);
 
                 //add to list
-                allPlayers[int.Parse(data[0])] = playerObj.GetComponent<Player>();
-                allPlayers[int.Parse(data[0])].vx = float.Parse(data[3]);
-                allPlayers[int.Parse(data[0])].vy = float.Parse(data[4]);
+                allPlayers[playerNum] = playerObj.GetComponent<Player>();
+                allPlayers[playerNum].vx = float.Parse(data[3]);
+                allPlayers[playerNum].vy = float.Parse(data[4]);
 
             }
 
-            allPlayers[int.Parse(data[0])].updated = true;
+            allPlayers[playerNum].updated = true;
         }
     }
 
     void SendUpdate() {
 
         StringBuilder data = new StringBuilder();
-        data.Append(controllingPlayer);
+        data.Append(playerNumber);
         data.Append(",");
         data.Append(controllingPlayer.transform.position.x);
         data.Append(",");
@@ -211,7 +211,7 @@ public class NetworkManager : MonoBehaviour
     {
 
         //flag for checking if moved
-        if (controllingPlayer.moved)
+        if (controllingPlayer != null && controllingPlayer.moved)
         {
             //sends update
             SendUpdate();
