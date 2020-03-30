@@ -1,0 +1,7 @@
+﻿  ClientNetwork.cpp
+C:\Users\turnt\OneDrive\Documents\C++\ServerClient\UnityPlugins\CNET\CNET\ClientNetwork.cpp(167,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\turnt\OneDrive\Documents\C++\ServerClient\UnityPlugins\CNET\CNET\ClientNetwork.cpp(191,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     Creating library C:\Users\turnt\OneDrive\Documents\C++\ServerClient\UnityPlugins\CNET\x64\Release\CNET.lib and object C:\Users\turnt\OneDrive\Documents\C++\ServerClient\UnityPlugins\CNET\x64\Release\CNET.exp
+  Generating code
+LINK : fatal error C1354: error accessing previous object file C:\Users\turnt\OneDrive\Documents\C++\ServerClient\UnityPlugins\CNET\x64\Release\CNET.iobj (corrupted symbol table)
+LINK : fatal error LNK1257: code generation failed
